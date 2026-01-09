@@ -1,6 +1,5 @@
 import "dotenv/config";
 import express, { Request, Response } from "express";
-import fetch from "node-fetch";
 import { Client, GatewayIntentBits } from "discord.js";
 import { CONFIG } from "./config/config";
 import { registerReadyEvent } from "./events/ready";
