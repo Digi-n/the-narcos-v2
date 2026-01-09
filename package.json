@@ -9,6 +9,7 @@
     "start": "node dist/index.js",
     "register": "ts-node src/registerCommands.ts"
   },
+  "engines": {"node": ">=20.0.0"},
   "keywords": [],
   "author": "",
   "license": "ISC",
