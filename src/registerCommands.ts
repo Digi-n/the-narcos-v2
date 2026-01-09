@@ -9,8 +9,11 @@ import { applyCommand } from "./commands/apply";
 import * as shopCommand from "./commands/shop";
 import * as historyCommand from "./commands/history";
 import { setupStockCommand } from "./commands/setupStock";
+import { intelCommand } from "./commands/intel";
 
 const CLIENT_ID = "1458294328504881276";
+console.log("INTEL RAW:", intelCommand);
+console.log("INTEL JSON:", intelCommand.data.toJSON());
 
 const commands = [
   pingCommand.data.toJSON(),
@@ -22,6 +25,7 @@ const commands = [
   shopCommand.data.toJSON(),
   historyCommand.data.toJSON(),
   setupStockCommand.data.toJSON(),
+  intelCommand.data.toJSON(),
 ];
 
 const rest = new REST({ version: "10" }).setToken(CONFIG.TOKEN);

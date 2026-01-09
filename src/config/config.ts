@@ -1,8 +1,17 @@
+import "dotenv/config";
+
 export const CONFIG = {
+  // TOKENS
   TOKEN: process.env.DISCORD_TOKEN!,
+
+  // SERVER
   GUILD_ID: "1451761878089990257",
+
+  // ROLES (IDS)
   MANAGEMENT_ROLE_ID: "1451830831130873897",
   BOSS_ROLE_ID: "1451831767701913741",
+
+  // CHANNELS (IDS)
   EMBED_CREATOR_CHANNEL_ID: "1458416230770802770",
 
   CHANNELS: {
@@ -13,6 +22,7 @@ export const CONFIG = {
     WELCOME: "1451806935887253504",
   },
 
+  // ROLE NAMES
   ROLES: {
     MANAGEMENT: "Management",
     BANKER: "Banker",

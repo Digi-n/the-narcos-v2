@@ -18,10 +18,16 @@ import { stockModal } from "../components/stockModal";
 import { updateStock } from "../utils/stockStore";
 import { setupStockCommand } from "../commands/setupStock";
 
+// 🕵️ INTEL SYSTEM
+import { intelCommand } from "../commands/intel";
+import { handleIntelModal } from "../interactions/intelModal";
+
 export function registerInteractionEvent(client: Client) {
   client.on("interactionCreate", async (interaction: Interaction) => {
 
     /* ================= MODALS ================= */
+    // 🔴 IMPORTANT: INTEL MODAL FIRST
+    await handleIntelModal(interaction);
     await handleEmbedModal(interaction);
 
     if (interaction.isModalSubmit()) {
@@ -43,11 +49,10 @@ export function registerInteractionEvent(client: Client) {
           interaction.fields.getTextInputValue("amount")
         );
 
-        // allow negative, block zero
         if (isNaN(amount) || amount === 0) {
           await interaction.reply({
             content: "❌ Enter a valid number (use - to subtract)",
-            flags: 64
+            flags: 64,
           });
           return;
         }
@@ -69,25 +74,25 @@ export function registerInteractionEvent(client: Client) {
                 : `Current Stock: **${stock[type]} g**`
             )
             .setColor(
-              type === "weed" ? 0x1aff00 :
-              type === "meth" ? 0x00b3ff :
-              0xff0000
+              type === "weed"
+                ? 0x1aff00
+                : type === "meth"
+                ? 0x00b3ff
+                : 0xff0000
             );
 
-          // 🔁 Update panel message
           if (interaction.message) {
             await interaction.message.edit({ embeds: [embed] });
           }
 
           await interaction.reply({
             content: `✅ **${amount > 0 ? "+" : ""}${amount} g applied**`,
-            flags: 64
+            flags: 64,
           });
-
         } catch {
           await interaction.reply({
             content: "❌ Not enough stock to subtract",
-            flags: 64
+            flags: 64,
           });
         }
 
@@ -116,6 +121,12 @@ export function registerInteractionEvent(client: Client) {
 
     /* ================= SLASH COMMANDS ================= */
     if (!interaction.isChatInputCommand()) return;
+
+    // 🕵️ INTEL COMMAND
+    if (interaction.commandName === "intel") {
+      await intelCommand.execute(interaction);
+      return;
+    }
 
     if (interaction.commandName === "ping") {
       await interaction.reply({ content: "🏓 Pong!", flags: 64 });
@@ -158,11 +169,9 @@ export function registerInteractionEvent(client: Client) {
       return;
     }
 
-    // 🚚 STOCK SETUP
     if (interaction.commandName === "setup_stock") {
       await setupStockCommand.execute(interaction);
       return;
     }
-
   });
 }
