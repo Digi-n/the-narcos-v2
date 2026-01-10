@@ -24,40 +24,44 @@ import { handleIntelModal } from "../interactions/intelModal";
 
 export function registerInteractionEvent(client: Client) {
   client.on("interactionCreate", async (interaction: Interaction) => {
+    try {
 
-    /* ================= MODALS ================= */
-    // 🔴 IMPORTANT: INTEL MODAL FIRST
-    await handleIntelModal(interaction);
-    await handleEmbedModal(interaction);
+      /* ================= MODALS ================= */
+      if (interaction.isModalSubmit()) {
 
-    if (interaction.isModalSubmit()) {
-
-      // 🛒 CART MODAL
-      if (interaction.customId.startsWith("cart_modal_")) {
-        await handleCartModal(interaction);
-        return;
-      }
-
-      // 🌿🧪🚚 STOCK MODAL
-      if (interaction.customId.startsWith("stock_modal_")) {
-        const type = interaction.customId.replace("stock_modal_", "") as
-          | "weed"
-          | "meth"
-          | "distribution";
-
-        const amount = parseInt(
-          interaction.fields.getTextInputValue("amount")
-        );
-
-        if (isNaN(amount) || amount === 0) {
-          await interaction.reply({
-            content: "❌ Enter a valid number (use - to subtract)",
-            flags: 64,
-          });
+        if (interaction.customId === "intel_modal") {
+          await handleIntelModal(interaction);
           return;
         }
 
-        try {
+        if (interaction.customId.startsWith("embed_")) {
+          await handleEmbedModal(interaction);
+          return;
+        }
+
+        if (interaction.customId.startsWith("cart_modal_")) {
+          await handleCartModal(interaction);
+          return;
+        }
+
+        if (interaction.customId.startsWith("stock_modal_")) {
+          const type = interaction.customId.replace("stock_modal_", "") as
+            | "weed"
+            | "meth"
+            | "distribution";
+
+          const amount = parseInt(
+            interaction.fields.getTextInputValue("amount")
+          );
+
+          if (isNaN(amount) || amount === 0) {
+            await interaction.reply({
+              content: "❌ Enter a valid number",
+              flags: 64,
+            });
+            return;
+          }
+
           const stock = updateStock(type, amount);
 
           const embed = new EmbedBuilder()
@@ -65,20 +69,13 @@ export function registerInteractionEvent(client: Client) {
               type === "weed"
                 ? "🌿 WEED STOCK"
                 : type === "meth"
-                ? "🧪 METH STOCK"
-                : "🚚 DISTRIBUTION LOG"
+                  ? "🧪 METH STOCK"
+                  : "🚚 DISTRIBUTION LOG"
             )
             .setDescription(
               type === "distribution"
                 ? `Total Distributed: **${stock[type]} g**`
                 : `Current Stock: **${stock[type]} g**`
-            )
-            .setColor(
-              type === "weed"
-                ? 0x1aff00
-                : type === "meth"
-                ? 0x00b3ff
-                : 0xff0000
             );
 
           if (interaction.message) {
@@ -86,92 +83,93 @@ export function registerInteractionEvent(client: Client) {
           }
 
           await interaction.reply({
-            content: `✅ **${amount > 0 ? "+" : ""}${amount} g applied**`,
+            content: `✅ ${amount} g applied`,
             flags: 64,
           });
-        } catch {
-          await interaction.reply({
-            content: "❌ Not enough stock to subtract",
-            flags: 64,
-          });
+          return;
         }
 
         return;
       }
-    }
 
-    /* ================= BUTTONS ================= */
-    await handleEmbedButtons(interaction);
+      /* ================= BUTTONS ================= */
+      if (interaction.isButton()) {
 
-    if (interaction.isButton()) {
+        if (interaction.customId.startsWith("cart_")) {
+          await handleShopButtons(interaction);
+          return;
+        }
 
-      // 🛒 SHOP CART BUTTONS
-      if (interaction.customId.startsWith("cart_")) {
-        await handleShopButtons(interaction);
+        if (interaction.customId.startsWith("stock_")) {
+          const type = interaction.customId.split("_")[1];
+          await interaction.showModal(stockModal(type));
+          return;
+        }
+
+        await handleEmbedButtons(interaction);
         return;
       }
 
-      // 🌿🧪🚚 STOCK BUTTONS
-      if (interaction.customId.startsWith("stock_")) {
-        const type = interaction.customId.split("_")[1];
-        await interaction.showModal(stockModal(type));
+      /* ================= SLASH COMMANDS ================= */
+      if (!interaction.isChatInputCommand()) return;
+
+      if (interaction.commandName === "intel") {
+        await intelCommand.execute(interaction); // showModal ACKS
         return;
       }
-    }
 
-    /* ================= SLASH COMMANDS ================= */
-    if (!interaction.isChatInputCommand()) return;
+      if (interaction.commandName === "ping") {
+        await interaction.reply({ content: "🏓 Pong!", flags: 64 });
+        return;
+      }
 
-    // 🕵️ INTEL COMMAND
-    if (interaction.commandName === "intel") {
-      await intelCommand.execute(interaction);
-      return;
-    }
+      if (interaction.commandName === "setname") {
+        await setNameCommand.execute(interaction);
+        return;
+      }
 
-    if (interaction.commandName === "ping") {
-      await interaction.reply({ content: "🏓 Pong!", flags: 64 });
-      return;
-    }
+      if (interaction.commandName === "resetname") {
+        await resetNameCommand.execute(interaction);
+        return;
+      }
 
-    if (interaction.commandName === "setname") {
-      await setNameCommand.execute(interaction);
-      return;
-    }
+      if (interaction.commandName === "embedcreate") {
+        await embedCreateCommand.execute(interaction);
+        return;
+      }
 
-    if (interaction.commandName === "resetname") {
-      await resetNameCommand.execute(interaction);
-      return;
-    }
+      if (interaction.commandName === "roles") {
+        await rolesCommand.execute(interaction);
+        return;
+      }
 
-    if (interaction.commandName === "embedcreate") {
-      await embedCreateCommand.execute(interaction);
-      return;
-    }
+      if (interaction.commandName === "apply") {
+        await applyCommand.execute(interaction);
+        return;
+      }
 
-    if (interaction.commandName === "roles") {
-      await rolesCommand.execute(interaction);
-      return;
-    }
+      if (interaction.commandName === "shop") {
+        await shopCommand.execute(interaction);
+        return;
+      }
 
-    if (interaction.commandName === "apply") {
-      await applyCommand.execute(interaction);
-      return;
-    }
+      if (interaction.commandName === "history") {
+        await interaction.deferReply({ flags: 64 });
+        await historyCommand.execute(interaction);
+        return;
+      }
 
-    if (interaction.commandName === "shop") {
-      await shopCommand.execute(interaction);
-      return;
-    }
+      if (interaction.commandName === "setup_stock") {
+        await setupStockCommand.execute(interaction);
+        return;
+      }
 
-    if (interaction.commandName === "history") {
-      await interaction.deferReply({ flags: 64 });
-      await historyCommand.execute(interaction);
-      return;
-    }
-
-    if (interaction.commandName === "setup_stock") {
-      await setupStockCommand.execute(interaction);
-      return;
+    } catch (err: any) {
+      if (err.code === 40060 || err.code === 10062) {
+        console.warn(`[Warning] Interaction handling race condition ignored (Code: ${err.code})`);
+        return;
+      }
+      console.error("Interaction error:", err);
     }
   });
 }
