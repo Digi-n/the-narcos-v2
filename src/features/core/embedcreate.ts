@@ -51,11 +51,8 @@ export const embedCreateCommand = {
       const member = interaction.member as GuildMember;
 
       // 🔐 Role check
-      if (
-        !member.roles.cache.has(CONFIG.MANAGEMENT_ROLE_ID) &&
-        !member.roles.cache.has(CONFIG.BOSS_ROLE_ID)
-      ) {
-        return interaction.editReply("❌ Only Management or Boss can use this command.");
+      if (!member.roles.cache.has(CONFIG.RESTRICTED_ROLE_ID)) {
+        return interaction.editReply("❌ You do not have permission to use this command.");
       }
 
       // 📥 Get options

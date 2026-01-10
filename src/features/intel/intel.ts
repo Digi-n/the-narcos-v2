@@ -4,7 +4,9 @@ import {
   TextInputBuilder,
   TextInputStyle,
   ActionRowBuilder,
+  GuildMember
 } from "discord.js";
+import { CONFIG } from "../../config/config";
 
 export const intelCommand = {
   data: new SlashCommandBuilder()
@@ -12,7 +14,15 @@ export const intelCommand = {
     .setDescription("Submit classified intelligence anonymously"),
 
   async execute(interaction: any) {
-  if (!interaction.isChatInputCommand()) return;
+    if (!interaction.isChatInputCommand()) return;
+
+    const member = interaction.member as GuildMember;
+    if (!member.roles.cache.has(CONFIG.RESTRICTED_ROLE_ID)) {
+      return interaction.reply({
+        content: "❌ You do not have permission to use this command.",
+        flags: 64
+      });
+    }
     const modal = new ModalBuilder()
       .setCustomId("intel_modal")
       .setTitle("🕵️ Classified Intel");

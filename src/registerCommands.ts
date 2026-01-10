@@ -12,7 +12,7 @@ import { applyCommand } from "./features/core/apply";
 import * as shopCommand from "./features/economy/shop";
 import * as historyCommand from "./features/economy/history";
 import { setupStockCommand } from "./features/economy/setupStock";
-import { balanceCommand, dailyCommand } from "./features/economy/economy";
+import { balanceCommand } from "./features/economy/economy";
 
 // Intel
 import { intelCommand } from "./features/intel/intel";
@@ -21,9 +21,6 @@ import { intelCommand } from "./features/intel/intel";
 import { pubgCommand } from "./features/games/pubg";
 import { valorantCommand } from "./features/games/valorant";
 import { freefireCommand } from "./features/games/freefire";
-
-// Gacha
-import { gachaCommand, inventoryCommand, viewCardCommand } from "./features/cards/gacha";
 
 // Status
 import { setupStatusCommand } from "./features/status/setupStatus";
@@ -48,11 +45,6 @@ const commands = [
   freefireCommand.data.toJSON(),
   // Economy
   balanceCommand.data.toJSON(),
-  dailyCommand.data.toJSON(),
-  // Gacha
-  gachaCommand.data.toJSON(),
-  inventoryCommand.data.toJSON(),
-  viewCardCommand.data.toJSON(),
   // Status
   setupStatusCommand.data.toJSON(),
 ];

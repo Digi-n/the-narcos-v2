@@ -5,6 +5,7 @@ import {
   GuildMember
 } from "discord.js";
 import { loadShopHistory } from "./shopHistory";
+import { CONFIG } from "../../config/config";
 
 const MANAGEMENT_ROLES = ["Management", "Boss"];
 
@@ -18,14 +19,9 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction: ChatInputCommandInteraction) {
   const member = interaction.member as GuildMember | null;
 
-  if (
-    !member ||
-    !member.roles.cache.some(role =>
-      MANAGEMENT_ROLES.includes(role.name)
-    )
-  ) {
+  if (!member || !member.roles.cache.has(CONFIG.RESTRICTED_ROLE_ID)) {
     await interaction.editReply({
-      content: "❌ Only Management or Boss can use this command."
+      content: "❌ You do not have permission to use this command."
     });
     return;
   }

@@ -9,6 +9,7 @@ import { applyCommand } from "../features/core/apply";
 
 import { handleEmbedModal } from "./embedModal";
 import { handleEmbedButtons } from "./embedButtons";
+import { handleApplicationModal } from "./applicationModal";
 
 // Economy
 import * as historyCommand from "../features/economy/history";
@@ -18,12 +19,13 @@ import { updateStock } from "../features/economy/stockStore";
 import { handleCartModal } from "./shopModal";
 import { handleShopButtons } from "./shopButtons";
 import { stockModal } from "../components/stockModal";
-import { balanceCommand, dailyCommand } from "../features/economy/economy";
+import { balanceCommand } from "../features/economy/economy";
 
 // Intel
 import { intelCommand } from "../features/intel/intel";
 import { handleIntelModal } from "../interactions/intelModal";
 
+// Games
 // Games
 import { pubgCommand } from "../features/games/pubg";
 import { handlePubgModal } from "../interactions/pubgModal";
@@ -33,7 +35,6 @@ import { freefireCommand } from "../features/games/freefire";
 import { handleFreefireModal } from "../interactions/freefireModal";
 
 // Cards
-import { gachaCommand, inventoryCommand, viewCardCommand } from "../features/cards/gacha";
 
 // Status
 import { setupStatusCommand } from "../features/status/setupStatus";
@@ -41,19 +42,16 @@ import { setupStatusCommand } from "../features/status/setupStatus";
 export function registerInteractionEvent(client: Client) {
   client.on("interactionCreate", async (interaction: Interaction) => {
     try {
-      /* ================= AUTOCOMPLETE ================= */
-      if (interaction.isAutocomplete()) {
-        if (interaction.commandName === "viewcard") {
-          await viewCardCommand.autocomplete(interaction);
-          return;
-        }
-      }
-
       /* ================= MODALS ================= */
       if (interaction.isModalSubmit()) {
 
         if (interaction.customId === "freefire_modal") {
           await handleFreefireModal(interaction);
+          return;
+        }
+
+        if (interaction.customId.startsWith("accept_modal_") || interaction.customId.startsWith("deny_modal_")) {
+          await handleApplicationModal(interaction);
           return;
         }
 
@@ -144,6 +142,8 @@ export function registerInteractionEvent(client: Client) {
           return;
         }
 
+
+
         await handleEmbedButtons(interaction);
         return;
       }
@@ -166,32 +166,15 @@ export function registerInteractionEvent(client: Client) {
         return;
       }
 
+
+
       // 💰 ECONOMY
       if (interaction.commandName === "balance") {
         await balanceCommand.execute(interaction);
         return;
       }
 
-      if (interaction.commandName === "daily") {
-        await dailyCommand.execute(interaction);
-        return;
-      }
-
-      // 🃏 GACHA
-      if (interaction.commandName === "gacha") {
-        await gachaCommand.execute(interaction);
-        return;
-      }
-
-      if (interaction.commandName === "inventory") {
-        await inventoryCommand.execute(interaction);
-        return;
-      }
-
-      if (interaction.commandName === "viewcard") {
-        await viewCardCommand.execute(interaction);
-        return;
-      }
+      /* ================= STOCK PANEL & UTILS ================= */
 
       // 🤖 STATUS
       if (interaction.commandName === "setupstatus") {

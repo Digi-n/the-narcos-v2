@@ -2,10 +2,12 @@ import {
   SlashCommandBuilder,
   ChatInputCommandInteraction,
   EmbedBuilder,
-  TextChannel
+  TextChannel,
+  GuildMember
 } from "discord.js";
 import { loadStock } from "./stockStore";
 import { stockButtons } from "../../components/stockButtons";
+import { CONFIG } from "../../config/config";
 
 export const setupStockCommand = {
   data: new SlashCommandBuilder()
@@ -13,6 +15,13 @@ export const setupStockCommand = {
     .setDescription("Create Weed, Meth & Distribution stock panels"),
 
   async execute(interaction: ChatInputCommandInteraction) {
+    const member = interaction.member as GuildMember;
+    if (!member.roles.cache.has(CONFIG.RESTRICTED_ROLE_ID)) {
+      return interaction.reply({
+        content: "❌ You do not have permission to use this command.",
+        flags: 64
+      });
+    }
 
     // ✅ ACK silently (no banner, no timeout)
     await interaction.reply({

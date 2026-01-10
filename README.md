@@ -13,12 +13,6 @@ Powered by **Groq AI**, the bot acts as a loyal cartel advisor.
 - **Knowledge**: Aware of all server rules and "Dante Valestro" lore.
 - **Usage**: Mention `@Bot <question>` to chat.
 
-### 🃏 **Card & Gacha System**
-Collect rare cards of Cartel Legends and Anime Fighters.
-- **Gacha**: Pull cards with Coins (`/gacha`).
-- **Inventory**: View your collection (`/inventory`).
-- **Economy**: Daily rewards with role-based bonuses.
-
 ### 🎮 **Game Scrims Registration**
 Automated registration for competitive matches with **custom graphical cards**.
 - Supported Games: **PUBG Mobile**, **Valorant**, **Free Fire**.
@@ -42,11 +36,7 @@ A live dashboard that monitors bot health.
 | :--- | :--- | :--- |
 | **🤖 AI** | `@Bot <msg>` | Chat with the AI Consigliere |
 | **📊 Status** | `/setupstatus` | Create the Real-Time Status Panel (Admin) |
-| **🃏 Cards** | `/gacha` | Pull a random card (500 Coins) |
-| | `/inventory` | View your collected cards |
-| | `/viewcard` | View details/art of a specific card |
 | **💰 Economy** | `/balance` | Check your Coins and Gems |
-| | `/daily` | Claim daily reward (Syndicate Bonus!) |
 | **🎮 Games** | `/pubg` | Register for PUBG Scrims |
 | | `/valorant` | Register for Valorant Competitive |
 | | `/freefire` | Register for Free Fire Squad |
