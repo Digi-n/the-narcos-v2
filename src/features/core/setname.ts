@@ -8,9 +8,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
 } from "discord.js";
-import { CONFIG } from "../config/config";
-import { loadNameLocks, saveNameLocks } from "../utils/storage";
-import { managementOnly } from "../utils/permissions";
+import { CONFIG } from "../../config/config";
+import { loadNameLocks, saveNameLocks } from "./storage";
+import { managementOnly } from "./permissions";
 
 /* =========================
    SUPPORT VC BUTTON
@@ -60,7 +60,7 @@ export const setNameCommand = {
     ),
 
   async execute(interaction: ChatInputCommandInteraction) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     /* ---------- CHANNEL CHECK ---------- */
     if (
@@ -151,7 +151,7 @@ export const resetNameCommand = {
     ),
 
   async execute(interaction: ChatInputCommandInteraction) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     if (!interaction.inGuild()) return;
 

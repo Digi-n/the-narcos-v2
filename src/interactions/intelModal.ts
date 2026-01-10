@@ -2,7 +2,7 @@ import {
   EmbedBuilder,
   AttachmentBuilder,
 } from "discord.js";
-import { generateIntelImage } from "../utils/intelImage";
+import { generateIntelImage } from "../features/intel/intelImage";
 
 const INTEL_CHANNEL_ID = "1451809846109405204";
 
@@ -45,6 +45,7 @@ async function handleIntelModal(interaction: any) {
 
   // 📤 Send generated intel image
   await intelChannel.send({
+    content: "<@&1451829797394055208>",
     files: [attachment],
     embeds: [intelEmbed],
   });

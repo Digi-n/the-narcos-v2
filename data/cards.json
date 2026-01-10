@@ -1,0 +1,86 @@
+[
+    {
+        "id": "narcos_pablo",
+        "name": "El Patrón",
+        "rarity": "Legendary",
+        "element": "Narcos",
+        "stats": {
+            "atk": 90,
+            "def": 80,
+            "hp": 100,
+            "spd": 60
+        },
+        "image": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Pablo_Escobar_Mug.jpg",
+        "description": "The boss of all bosses. Plomo o Plata."
+    },
+    {
+        "id": "narcos_murphy",
+        "name": "Agent Murphy",
+        "rarity": "Epic",
+        "element": "DEA",
+        "stats": {
+            "atk": 75,
+            "def": 85,
+            "hp": 90,
+            "spd": 70
+        },
+        "image": "https://upload.wikimedia.org/wikipedia/en/2/23/Steve_Murphy_Narcos.jpg",
+        "description": "Relentless DEA agent hunting down the cartel."
+    },
+    {
+        "id": "anime_goku",
+        "name": "Saiyan Warrior",
+        "rarity": "Mythic",
+        "element": "Anime",
+        "stats": {
+            "atk": 100,
+            "def": 95,
+            "hp": 100,
+            "spd": 100
+        },
+        "image": "https://upload.wikimedia.org/wikipedia/en/3/33/Son_Goku_Dragon_Ball.jpg",
+        "description": "A legendary warrior seeking the strongest opponents."
+    },
+    {
+        "id": "soldier_grunt",
+        "name": "Cartel Soldier",
+        "rarity": "Common",
+        "element": "Narcos",
+        "stats": {
+            "atk": 30,
+            "def": 20,
+            "hp": 40,
+            "spd": 40
+        },
+        "image": "https://cdn-icons-png.flaticon.com/512/2922/2922510.png",
+        "description": "A loyal foot soldier."
+    },
+    {
+        "id": "police_officer",
+        "name": "Local Police",
+        "rarity": "Common",
+        "element": "DEA",
+        "stats": {
+            "atk": 25,
+            "def": 25,
+            "hp": 40,
+            "spd": 35
+        },
+        "image": "https://cdn-icons-png.flaticon.com/512/2922/2922561.png",
+        "description": "Protecting the streets."
+    },
+    {
+        "id": "sniper",
+        "name": "Sicario Sniper",
+        "rarity": "Rare",
+        "element": "Narcos",
+        "stats": {
+            "atk": 60,
+            "def": 10,
+            "hp": 30,
+            "spd": 80
+        },
+        "image": "https://cdn-icons-png.flaticon.com/512/2922/2922616.png",
+        "description": "Deadly from a distance."
+    }
+]

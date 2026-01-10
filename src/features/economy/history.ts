@@ -4,7 +4,7 @@ import {
   EmbedBuilder,
   GuildMember
 } from "discord.js";
-import { loadShopHistory } from "../utils/shopHistory";
+import { loadShopHistory } from "./shopHistory";
 
 const MANAGEMENT_ROLES = ["Management", "Boss"];
 

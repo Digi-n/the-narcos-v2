@@ -4,8 +4,8 @@ import {
   EmbedBuilder,
   TextChannel
 } from "discord.js";
-import { loadStock } from "../utils/stockStore";
-import { stockButtons } from "../components/stockButtons";
+import { loadStock } from "./stockStore";
+import { stockButtons } from "../../components/stockButtons";
 
 export const setupStockCommand = {
   data: new SlashCommandBuilder()
@@ -17,7 +17,7 @@ export const setupStockCommand = {
     // ✅ ACK silently (no banner, no timeout)
     await interaction.reply({
       content: "✅ Stock panels created",
-      ephemeral: true
+      flags: 64
     });
 
     // ✅ ENSURE GUILD TEXT CHANNEL

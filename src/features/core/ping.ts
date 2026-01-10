@@ -8,7 +8,7 @@ export const pingCommand = {
   async execute(interaction: ChatInputCommandInteraction) {
     await interaction.reply({
       content: "🏓 Pong!",
-      ephemeral: true,
+      flags: 64,
     });
   },
 };

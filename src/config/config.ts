@@ -3,6 +3,7 @@ import "dotenv/config";
 export const CONFIG = {
   // TOKENS
   TOKEN: process.env.DISCORD_TOKEN!,
+  GROQ_API_KEY: process.env.GROQ_API_KEY!,
 
   // SERVER
   GUILD_ID: "1451761878089990257",

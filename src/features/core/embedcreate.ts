@@ -7,7 +7,7 @@ import {
   TextChannel,
   PermissionFlagsBits,
 } from "discord.js";
-import { CONFIG } from "../config/config";
+import { CONFIG } from "../../config/config";
 
 export const embedCreateCommand = {
   data: new SlashCommandBuilder()
@@ -40,7 +40,7 @@ export const embedCreateCommand = {
 
   async execute(interaction: ChatInputCommandInteraction) {
     // ⏱ Prevent timeout
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     try {
       // 🔒 Guild only

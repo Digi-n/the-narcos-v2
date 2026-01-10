@@ -1,15 +1,32 @@
 import { REST, Routes } from "discord.js";
 import { CONFIG } from "./config/config";
 
-import { pingCommand } from "./commands/ping";
-import { setNameCommand, resetNameCommand } from "./commands/setname";
-import { embedCreateCommand } from "./commands/embedcreate";
-import { rolesCommand } from "./commands/roles";
-import { applyCommand } from "./commands/apply";
-import * as shopCommand from "./commands/shop";
-import * as historyCommand from "./commands/history";
-import { setupStockCommand } from "./commands/setupStock";
-import { intelCommand } from "./commands/intel";
+// Core
+import { pingCommand } from "./features/core/ping";
+import { setNameCommand, resetNameCommand } from "./features/core/setname";
+import { embedCreateCommand } from "./features/core/embedcreate";
+import { rolesCommand } from "./features/core/roles";
+import { applyCommand } from "./features/core/apply";
+
+// Economy
+import * as shopCommand from "./features/economy/shop";
+import * as historyCommand from "./features/economy/history";
+import { setupStockCommand } from "./features/economy/setupStock";
+import { balanceCommand, dailyCommand } from "./features/economy/economy";
+
+// Intel
+import { intelCommand } from "./features/intel/intel";
+
+// Games
+import { pubgCommand } from "./features/games/pubg";
+import { valorantCommand } from "./features/games/valorant";
+import { freefireCommand } from "./features/games/freefire";
+
+// Gacha
+import { gachaCommand, inventoryCommand, viewCardCommand } from "./features/cards/gacha";
+
+// Status
+import { setupStatusCommand } from "./features/status/setupStatus";
 
 const CLIENT_ID = "1458294328504881276";
 console.log("INTEL RAW:", intelCommand);
@@ -26,6 +43,18 @@ const commands = [
   historyCommand.data.toJSON(),
   setupStockCommand.data.toJSON(),
   intelCommand.data.toJSON(),
+  pubgCommand.data.toJSON(),
+  valorantCommand.data.toJSON(),
+  freefireCommand.data.toJSON(),
+  // Economy
+  balanceCommand.data.toJSON(),
+  dailyCommand.data.toJSON(),
+  // Gacha
+  gachaCommand.data.toJSON(),
+  inventoryCommand.data.toJSON(),
+  viewCardCommand.data.toJSON(),
+  // Status
+  setupStatusCommand.data.toJSON(),
 ];
 
 const rest = new REST({ version: "10" }).setToken(CONFIG.TOKEN);

@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, GuildMember } from "discord.js";
-import { CONFIG } from "../config/config";
+import { CONFIG } from "../../config/config";
 
 export function isManagement(member: GuildMember): boolean {
   return member.roles.cache.some(

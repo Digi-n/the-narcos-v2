@@ -7,9 +7,9 @@ import {
 } from "discord.js";
 
 import { createCartModal } from "./shopModal";
-import { userCarts } from "../utils/cartStore";
+import { userCarts } from "../features/economy/cartStore";
 import { SHOP_ITEMS } from "../data/shopItems";
-import { saveShopHistory } from "../utils/shopHistory";
+import { saveShopHistory } from "../features/economy/shopHistory";
 
 /* =========================
    SHOP BUTTON ROW

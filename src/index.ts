@@ -30,7 +30,21 @@ registerMessageEvent(client);
 console.log("TOKEN LOADED:", process.env.DISCORD_TOKEN ? "YES" : "NO");
 
 // Login
+// Login
 client.login(CONFIG.TOKEN);
+
+// Graceful Shutdown
+import { updateStatusPanel } from "./features/status/statusPanel";
+
+const shutdown = async () => {
+  console.log("Shutting down...");
+  await updateStatusPanel(client, true); // Set Offline
+  client.destroy();
+  process.exit(0);
+};
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
 
 // =======================
 // Render HTTP Keep-Alive

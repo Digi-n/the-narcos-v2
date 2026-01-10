@@ -55,7 +55,7 @@ export async function handleEmbedModal(interaction: Interaction) {
       content: "👀 Embed Preview",
       embeds: [embed],
       components: [buttons],
-      ephemeral: true,
+      flags: 64,
     });
 
     return;
@@ -68,7 +68,7 @@ export async function handleEmbedModal(interaction: Interaction) {
     interaction.customId.startsWith("accept_modal_") ||
     interaction.customId.startsWith("deny_modal_")
   ) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     const [action, , userId] = interaction.customId.split("_");
     const reason = interaction.fields.getTextInputValue("reason");

@@ -6,7 +6,7 @@ import {
   ModalSubmitInteraction
 } from "discord.js";
 import { CART_PAGES } from "../data/shopItems";
-import { userCarts } from "../utils/cartStore";
+import { userCarts } from "../features/economy/cartStore";
 
 export function createCartModal(cartNumber: number) {
   const modal = new ModalBuilder()
@@ -39,12 +39,12 @@ export async function handleCartModal(interaction: ModalSubmitInteraction) {
   const cart = userCarts.get(userId)!;
 
   // ✅ CORRECT WAY (discord.js v14)
- for (const [id, component] of interaction.fields.fields) {
-  const value = (component as any).value;
-  if (value) {
-    cart[id] = Number(value);
+  for (const [id, component] of interaction.fields.fields) {
+    const value = (component as any).value;
+    if (value) {
+      cart[id] = Number(value);
+    }
   }
-}
 
 
   await interaction.reply({

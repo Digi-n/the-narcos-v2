@@ -11,8 +11,8 @@ import {
   ButtonStyle,
 } from "discord.js";
 
-import { activeApplications } from "../commands/apply";
-import { questions } from "../utils/questions";
+import { activeApplications } from "../features/core/apply";
+import { questions } from "../features/core/questions";
 
 /* =========================
    ROLE BUTTON MAP
@@ -35,7 +35,7 @@ export async function handleEmbedButtons(interaction: Interaction) {
      APPLY – START APPLICATION
   ========================== */
   if (interaction.customId === "start_apply") {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     activeApplications.set(interaction.user.id, {
       index: 0,
@@ -58,7 +58,7 @@ export async function handleEmbedButtons(interaction: Interaction) {
   if (interaction.customId === "cancel_apply") {
     return interaction.reply({
       content: "❌ Application cancelled.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -72,7 +72,7 @@ export async function handleEmbedButtons(interaction: Interaction) {
     if (!channel) {
       return interaction.reply({
         content: "❌ Channel not found.",
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -124,13 +124,13 @@ export async function handleEmbedButtons(interaction: Interaction) {
       await member.roles.remove(roleId);
       return interaction.reply({
         content: `❌ Removed **${role.name}**`,
-        ephemeral: true,
+        flags: 64,
       });
     } else {
       await member.roles.add(roleId);
       return interaction.reply({
         content: `✅ Added **${role.name}**`,
-        ephemeral: true,
+        flags: 64,
       });
     }
   }
@@ -139,7 +139,7 @@ export async function handleEmbedButtons(interaction: Interaction) {
      APPLY – ACCEPT (NO REASON)
   ========================== */
   if (interaction.customId.startsWith("accept_") && !interaction.customId.includes("reason")) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     const userId = interaction.customId.split("_")[1];
     const guild = interaction.guild;
@@ -169,7 +169,7 @@ export async function handleEmbedButtons(interaction: Interaction) {
      APPLY – DENY (NO REASON)
   ========================== */
   if (interaction.customId.startsWith("deny_") && !interaction.customId.includes("reason")) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     const userId = interaction.customId.split("_")[1];
     const member = await interaction.guild?.members.fetch(userId);

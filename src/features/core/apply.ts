@@ -23,7 +23,7 @@ export const applyCommand = {
   async execute(interaction: ChatInputCommandInteraction) {
     try {
       // ✅ PREVENT TIMEOUT
-      await interaction.deferReply({ ephemeral: true });
+      await interaction.deferReply({ flags: 64 });
 
       const embed = new EmbedBuilder()
         .setTitle("Recruit status")
@@ -46,26 +46,26 @@ export const applyCommand = {
       );
 
       // SEND DM
-await interaction.user.send({
-  embeds: [embed],
-  components: [row],
-});
+      await interaction.user.send({
+        embeds: [embed],
+        components: [row],
+      });
 
-// CREATE DM + JUMP BUTTON
-const dm = await interaction.user.createDM();
+      // CREATE DM + JUMP BUTTON
+      const dm = await interaction.user.createDM();
 
-const jumpRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-  new ButtonBuilder()
-    .setLabel("Jump to application")
-    .setStyle(ButtonStyle.Link)
-    .setURL(dm.url)
-);
+      const jumpRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+        new ButtonBuilder()
+          .setLabel("Jump to application")
+          .setStyle(ButtonStyle.Link)
+          .setURL(dm.url)
+      );
 
-// SERVER CONFIRMATION
-await interaction.editReply({
-  content: "📩 Application started in your DMs.",
-  components: [jumpRow],
-});
+      // SERVER CONFIRMATION
+      await interaction.editReply({
+        content: "📩 Application started in your DMs.",
+        components: [jumpRow],
+      });
 
     } catch (error) {
       console.error("❌ /apply error:", error);
@@ -80,7 +80,7 @@ await interaction.editReply({
         await interaction.reply({
           content:
             "❌ Something went wrong.\nPlease try again or contact staff.",
-          ephemeral: true,
+          flags: 64,
         });
       }
     }
